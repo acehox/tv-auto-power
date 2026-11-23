@@ -1,0 +1,11 @@
+# Local config and TV credentials - never commit
+.env
+config.yaml
+tokens.json
+*.pem
+
+# Runtime
+*.log
+.venv/
+venv/
+__pycache__/

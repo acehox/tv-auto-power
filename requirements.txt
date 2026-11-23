@@ -1,0 +1,2 @@
+# Pinned: tv_power.py uses vidaa internals (topics, _publish) that may change.
+vidaa-control==1.1.0
