@@ -42,7 +42,7 @@ Running it again is safe: it keeps your config and replaces its own tasks and sh
 | Key | Default | |
 |---|---|---|
 | `TV_INPUT` | unset | PC input, as the id shown by `.\.venv\Scripts\tv.exe source list`. Unset: no input switching, and the TV turns off with the PC whatever it's showing |
-| `TV_MAC` | from `config.yaml` | TV MAC address for Wake-on-LAN |
+| `TV_MAC` | from the ARP table | TV MAC address, used only for Wake-on-LAN |
 | `TV_WOL_RETRIES` | `12` | Wake-on-LAN attempts, 5 s apart |
 | `TV_SOURCE_RETRIES` | `6` | Input-switch attempts after waking |
 

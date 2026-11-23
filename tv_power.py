@@ -32,6 +32,9 @@ _load_env(HERE / ".env")
 PC_INPUT = os.environ.get("TV_INPUT", "").strip() or None
 CONNECT_RETRIES = int(os.environ.get("TV_WOL_RETRIES", 12))  # x5 s for the TV to boot after WoL
 SOURCE_RETRIES = int(os.environ.get("TV_SOURCE_RETRIES", 6))  # x~2.5 s for the input switch
+# The TV's real MAC, for Wake-on-LAN only. Popped so vidaa doesn't apply it to the
+# config's `mac`, which is the pairing identity the tokens were issued for.
+TV_MAC = os.environ.pop("TV_MAC", "").strip() or None
 
 
 # vidaa reads config.yaml and tokens.json from the working directory,
@@ -95,7 +98,7 @@ def _power_on_and_switch(tv) -> None:
 
 def turn_on() -> int:
     cfg = get_default_tv()
-    mac = cfg.get("mac") or cfg.get("device_id")  # TV_MAC in .env overrides both
+    mac = TV_MAC or cfg.get("mac") or cfg.get("device_id")
     subnet = cfg["host"].rsplit(".", 1)[0]  # also broadcast to 192.168.0.255
     tv = create_tv_client()
     if tv.connect(timeout=3):

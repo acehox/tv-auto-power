@@ -175,8 +175,8 @@ if (-not (Test-Path tokens.json)) {
 $cfg = & $py -c "import json; from vidaa.config.loader import get_default_tv as g; print(json.dumps(g() or {}))" |
     ConvertFrom-Json
 $macRe = '^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$'
-$hasMac = (Get-EnvValue 'TV_MAC') -or ($cfg.mac -match $macRe) -or ($cfg.device_id -match $macRe)
-if (-not $hasMac) {
+# Not config.yaml's mac: that is the pairing identity, not necessarily the TV's MAC.
+if (-not (Get-EnvValue 'TV_MAC')) {
     Step 'Looking up the TV MAC address'
     Test-Connection $cfg.host -Count 1 -Quiet | Out-Null  # fills the ARP cache
     $mac = (Get-NetNeighbor -IPAddress $cfg.host -ErrorAction SilentlyContinue |
